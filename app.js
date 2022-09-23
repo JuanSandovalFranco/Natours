@@ -14,6 +14,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const bookingRouter = require('./routes/bookingRoutes');
+const compression = require('compression');
 const cors = require('cors');
 
 //Start express application
@@ -84,6 +85,8 @@ app.use(
 // app.get('/api/v1/tours/:id', getTour);
 
 // app.patch('/api/v1/tours/:id', (req, res) => {});
+
+app.use(compression());
 
 // Router
 app.use('/api/v1/bookings', bookingRouter);

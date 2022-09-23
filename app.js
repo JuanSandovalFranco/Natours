@@ -16,6 +16,7 @@ const cookieParser = require('cookie-parser');
 const bookingRouter = require('./routes/bookingRoutes');
 const cors = require('cors');
 
+//Start express application
 const app = express();
 
 ///Middleware

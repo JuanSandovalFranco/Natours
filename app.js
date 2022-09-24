@@ -14,11 +14,14 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const bookingRouter = require('./routes/bookingRoutes');
+const bookingController = require('./controllers/bookingController');
 const compression = require('compression');
 const cors = require('cors');
 
 //Start express application
 const app = express();
+
+app.enable('trust proxy');
 
 ///Middleware
 
@@ -29,6 +32,8 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(cors());
+
+app.options('*', cors());
 
 app.use(
   helmet({
@@ -49,6 +54,12 @@ const limiter = rateLimit({
 });
 
 app.use('/api', limiter);
+
+app.use(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  bookingController.webhookCheckout
+);
 
 app.use(express.json({ limit: '10kb' }));
 
